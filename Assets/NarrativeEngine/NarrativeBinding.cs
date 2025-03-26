@@ -1,13 +1,22 @@
 using UnityEngine;
-using NarrativeEngine;
-/// <summary>
-/// Relates a Game Object with a Narrative Unit
-/// </summary>
+using UnityEngine.WSA;
+
+public interface IBoundtoNarrative
+{
+    bool BoundNodeTryActivate();
+    bool BoundNodeIsActivated();
+    bool BoundNodeIsActivable();
+}
+
+// Relates a Game Object in the hierarchy with a Narrative
 public class NarrativeBinding : MonoBehaviour, IBoundtoNarrative
 {
     private static NarrativeSequencer _narrativeSequencer;
+    Staging.IStageElement stageBound;
 
-    Staging.IStageElement stageBound; 
+    [SerializeField] bool Activable;
+    [SerializeField] bool Activated;
+
 
     void Start()
     {
@@ -22,8 +31,11 @@ public class NarrativeBinding : MonoBehaviour, IBoundtoNarrative
 
     public void Update()
     {
-        stageBound.SetVisible( BoundNodeIsActivable() || BoundNodeIsActivated());
-        stageBound.SetHighLight(BoundNodeIsActivable() && !BoundNodeIsActivated());  
+        Activable = BoundNodeIsActivable();
+        Activated = BoundNodeIsActivated();
+
+        stageBound.SetVisibility( BoundNodeIsActivable() || BoundNodeIsActivated());
+        stageBound.SetHighlight(BoundNodeIsActivable() && !BoundNodeIsActivated());  
     }
 
     private void OnMouseDown()

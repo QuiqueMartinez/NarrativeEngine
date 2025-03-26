@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
-// Class that takes control of the stage
+// Controls the elements in the stage according to the state of the narrative sequencer.
 public class Staging : MonoBehaviour
 {
     public interface IStageElement
     {
-        public void SetVisible(bool visible);
-        public void SetHighLight(bool visible);
+        public void SetVisibility(bool visibility);
+        public void SetHighlight(bool highlight);
     }
 
     public TextMesh BannerText;
@@ -30,13 +30,13 @@ public class Staging : MonoBehaviour
     {
         switch (narrativeSequencer.GetCurrentPlotLabel())
         {
-            case "Straight":
+            case "Act1":
                 SetupScene1();
                 break;
-            case "Predicate":
+            case "Act2":
                 SetupScene2();
                 break;
-            case "Milestone":
+            case "Act3":
                 SetupScene3();
                 break;
         }
